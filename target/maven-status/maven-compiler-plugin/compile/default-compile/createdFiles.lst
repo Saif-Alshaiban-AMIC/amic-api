@@ -1,0 +1,12 @@
+com\recruitment\api\config\SwaggerConfig.class
+com\recruitment\api\controller\AuthController.class
+com\recruitment\api\model\Role.class
+com\recruitment\api\model\User.class
+com\recruitment\api\controller\TestController.class
+com\recruitment\api\dto\RegisterRequest.class
+com\recruitment\api\ApiApplication.class
+com\recruitment\api\security\JwtAuthenticationFilter.class
+com\recruitment\api\security\JwtService.class
+com\recruitment\api\security\SecurityConfig.class
+com\recruitment\api\repository\UserRepository.class
+com\recruitment\api\dto\LoginRequest.class
