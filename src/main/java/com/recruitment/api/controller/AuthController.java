@@ -3,7 +3,7 @@ package com.recruitment.api.controller;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.springframework.security.crypto.password.PasswordEncoder ;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +45,9 @@ public class AuthController {
         user.setLastName(request.lastName);
         user.setEmail(request.email);
         user.setPassword(passwordEncoder.encode(request.password));
+        user.setPhoneNumber(request.phoneNumber);
+        user.setDepartment(request.department);
+        user.setJobTitle(request.jobTitle);
         user.setRole(Role.USER);
 
         userRepository.save(user);
@@ -83,7 +86,6 @@ public class AuthController {
         // in real app → send email
         return "Reset link: http://localhost:4200/reset-password?token=" + token;
     }
-
 
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam String token,

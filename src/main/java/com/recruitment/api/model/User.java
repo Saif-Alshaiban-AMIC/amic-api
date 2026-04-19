@@ -35,6 +35,13 @@ public class User {
     private String email;
 
     private String password;
+    private String phoneNumber;
+
+    private String profilePicture;
+
+    private Department department;
+
+    private String jobTitle;
 
     @Enumerated(EnumType.STRING)
     private Role role;
