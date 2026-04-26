@@ -1,13 +1,15 @@
 package com.recruitment.api.model;
+
 public enum Department {
-    HR,
-    IT,
-    SALES,
-    MARKETING,
+    HUMAN_RESOURCES,
+    IT_MIS,
     FINANCE,
-    OPERATIONS,
-    PROCUREMENT,
-    LEGAL,
-    CUSTOMER_SERVICE,
-  
+    BUSINESS_DEVELOPMENT,
+    BUSINESS_PROCESS,
+    CONTRACTS_COMPLIANCE,
+    ENGINEERING_RD,
+    EXECUTIVE,
+    IPP,
+    PROJECTS,
+    SUPPLY_CHAIN
 }
