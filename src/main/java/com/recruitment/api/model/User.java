@@ -51,6 +51,8 @@ public class User {
     private String resetToken;
     private LocalDateTime resetTokenExpiry;
 
+    private boolean mustChangePassword = false;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

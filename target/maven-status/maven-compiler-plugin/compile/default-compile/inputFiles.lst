@@ -1,10 +1,12 @@
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\ApiApplication.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\config\SwaggerConfig.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\controller\AuthController.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\controller\PasswordController.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\controller\ProfileController.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\controller\TestController.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\controller\UserController.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\AuthResponse.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\BulkCreateResult.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\CreateUserRequest.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\LoginRequest.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\ProfileUpdateRequest.java
@@ -12,6 +14,11 @@ C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNA
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\RegisterRequest.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\UserDto.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\dto\UserProfileResponse.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\exception\DuplicateEmailException.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\exception\ErrorResponse.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\exception\GlobalExceptionHandler.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\exception\InvalidDomainException.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\exception\ResourceNotFoundException.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\model\Department.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\model\RefreshToken.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\model\Role.java
@@ -24,3 +31,4 @@ C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNA
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\security\SecurityConfig.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\service\EmailService.java
 C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\service\RefreshTokenService.java
+C:\Users\salshaiban\OneDrive - Alkhorayef Group Company Ltd\Desktop\AMIC INTERNAL WEB\api\src\main\java\com\recruitment\api\service\UserService.java

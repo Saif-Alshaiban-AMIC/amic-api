@@ -1,28 +1,21 @@
 package com.recruitment.api.controller;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.recruitment.api.dto.AuthResponse;
 import com.recruitment.api.dto.LoginRequest;
 import com.recruitment.api.dto.RefreshRequest;
-import com.recruitment.api.dto.RegisterRequest;
 import com.recruitment.api.model.RefreshToken;
-import com.recruitment.api.model.Role;
 import com.recruitment.api.model.User;
-import com.recruitment.api.repository.UserRepository;
 import com.recruitment.api.security.JwtService;
 import com.recruitment.api.security.LoginRateLimiter;
-import com.recruitment.api.service.EmailService;
 import com.recruitment.api.service.RefreshTokenService;
+import com.recruitment.api.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,60 +25,34 @@ public class AuthController {
 
     private static final long ACCESS_TOKEN_EXPIRES_IN = 15 * 60; // seconds
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final LoginRateLimiter rateLimiter;
-    private final EmailService emailService;
 
-    public AuthController(UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            JwtService jwtService,
-            RefreshTokenService refreshTokenService,
-            LoginRateLimiter rateLimiter,
-            EmailService emailService) {
-        this.userRepository = userRepository;
+    public AuthController(UserService userService,
+                          PasswordEncoder passwordEncoder,
+                          JwtService jwtService,
+                          RefreshTokenService refreshTokenService,
+                          LoginRateLimiter rateLimiter) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
         this.rateLimiter = rateLimiter;
-        this.emailService = emailService;
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-
-        if (userRepository.findByEmail(request.email).isPresent()) {
-            return ResponseEntity.status(409).body("An account with this email already exists.");
-        }
-
-        User user = new User();
-        user.setFirstName(request.firstName);
-        user.setLastName(request.lastName);
-        user.setEmail(request.email);
-        user.setPassword(passwordEncoder.encode(request.password));
-        user.setPhoneNumber(request.phoneNumber);
-        user.setDepartment(request.department);
-        user.setJobTitle(request.jobTitle);
-        user.setRole(Role.USER);
-
-        userRepository.save(user);
-
-        return ResponseEntity.status(201).body("User registered");
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request,
-            HttpServletRequest httpRequest) {
-
+                                              HttpServletRequest httpRequest) {
         String ip = LoginRateLimiter.getClientIp(httpRequest);
 
         if (!rateLimiter.isAllowed(ip)) {
             return ResponseEntity.status(429).build();
         }
 
-        User user = userRepository.findByEmail(request.email).orElse(null);
+        User user = userService.findByEmail(request.email).orElse(null);
 
         if (user == null || !passwordEncoder.matches(request.password, user.getPassword())) {
             rateLimiter.recordFailure(ip);
@@ -94,8 +61,14 @@ public class AuthController {
 
         rateLimiter.recordSuccess(ip);
 
-        String accessToken = jwtService.generateToken(user.getEmail(), user.getRole().name());
-        String rawRefreshToken = refreshTokenService.createRefreshToken(user);
+        // First-login guard — user must set their own password before receiving tokens
+        if (user.isMustChangePassword()) {
+            String setupToken = userService.generateSetupToken(user);
+            return ResponseEntity.ok(AuthResponse.requiresSetup(setupToken));
+        }
+
+        String accessToken      = jwtService.generateToken(user.getEmail(), user.getRole().name());
+        String rawRefreshToken  = refreshTokenService.createRefreshToken(user);
 
         return ResponseEntity.ok(new AuthResponse(
                 accessToken,
@@ -108,15 +81,14 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest request) {
         try {
-            RefreshToken old = refreshTokenService.validateAndRotate(request.refreshToken);
-            User user = old.getUser();
-
-            String accessToken = jwtService.generateToken(user.getEmail(), user.getRole().name());
-            String newRawRefreshToken = refreshTokenService.createRefreshToken(user);
+            RefreshToken old  = refreshTokenService.validateAndRotate(request.refreshToken);
+            User user         = old.getUser();
+            String accessToken     = jwtService.generateToken(user.getEmail(), user.getRole().name());
+            String newRefreshToken = refreshTokenService.createRefreshToken(user);
 
             return ResponseEntity.ok(new AuthResponse(
                     accessToken,
-                    newRawRefreshToken,
+                    newRefreshToken,
                     ACCESS_TOKEN_EXPIRES_IN,
                     user.getRole().name()
             ));
@@ -134,39 +106,5 @@ public class AuthController {
             // Always succeed on logout even if token is already invalid
         }
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestParam String email) {
-
-        userRepository.findByEmail(email).ifPresent(user -> {
-            String token = UUID.randomUUID().toString();
-            user.setResetToken(token);
-            user.setResetTokenExpiry(LocalDateTime.now().plusMinutes(15));
-            userRepository.save(user);
-            emailService.sendPasswordReset(email, token);
-        });
-
-        return "If that email exists, a reset link has been sent";
-    }
-
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam String token,
-            @RequestParam String newPassword) {
-
-        User user = userRepository.findByResetToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid token"));
-
-        if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
-            return "Token expired";
-        }
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-        user.setResetToken(null);
-        user.setResetTokenExpiry(null);
-
-        userRepository.save(user);
-
-        return "Password updated successfully";
     }
 }

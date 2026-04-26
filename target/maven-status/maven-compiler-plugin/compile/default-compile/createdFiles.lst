@@ -1,4 +1,6 @@
 com\recruitment\api\config\SwaggerConfig.class
+com\recruitment\api\exception\DuplicateEmailException.class
+com\recruitment\api\exception\InvalidDomainException.class
 com\recruitment\api\model\User.class
 com\recruitment\api\model\RefreshToken.class
 com\recruitment\api\controller\TestController.class
@@ -9,16 +11,20 @@ com\recruitment\api\security\JwtAuthenticationFilter.class
 com\recruitment\api\security\SecurityConfig.class
 com\recruitment\api\security\LoginRateLimiter$AttemptRecord.class
 com\recruitment\api\dto\LoginRequest.class
+com\recruitment\api\exception\ResourceNotFoundException.class
 com\recruitment\api\controller\AuthController.class
 com\recruitment\api\dto\UserProfileResponse.class
 com\recruitment\api\service\RefreshTokenService.class
 com\recruitment\api\model\Role.class
+com\recruitment\api\controller\PasswordController.class
 com\recruitment\api\dto\RefreshRequest.class
 com\recruitment\api\dto\RegisterRequest.class
 com\recruitment\api\model\Department.class
 com\recruitment\api\controller\UserController.class
+com\recruitment\api\dto\BulkCreateResult.class
 com\recruitment\api\service\EmailService.class
 com\recruitment\api\dto\UserDto.class
+com\recruitment\api\exception\ErrorResponse.class
 com\recruitment\api\dto\CreateUserRequest.class
 com\recruitment\api\security\JwtService.class
 com\recruitment\api\dto\ProfileUpdateRequest.class
@@ -26,3 +32,5 @@ com\recruitment\api\dto\AuthResponse.class
 com\recruitment\api\repository\RefreshTokenRepository.class
 com\recruitment\api\repository\UserRepository.class
 com\recruitment\api\dto\UserProfileResponse$UserProfileResponseBuilder.class
+com\recruitment\api\exception\GlobalExceptionHandler.class
+com\recruitment\api\service\UserService.class
